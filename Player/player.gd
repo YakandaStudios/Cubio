@@ -19,12 +19,15 @@
 #SOFTWARE.
 extends KinematicBody
 
-export(float) var speed = 0.2
+var speed = 0.3
 export(float) var gravity = -2
 export(float) var jump_speed = 0.5
+var current_position = Vector3()
 var dir = Vector3()
+var rot = 0
 
 func _ready():
+	current_position = get_transform().origin
 	set_process(true)
 	
 #Set free the character object and pause the game
@@ -32,46 +35,49 @@ func die():
 	queue_free()
 	get_tree().set_pause(true)
 
-func move_front():
-	#dir.z = horizontal_speed
-	#	move(dir)
-	pass
+func move_front(current_position):
+	current_position.z = speed
+	move(current_position)
 
-func move_back():
-		#dir.z = horizontal_speed
-	#	move(dir)
-	pass
+func move_back(current_position):
+	current_position.z = -speed
+	move(current_position)
 
 func turn_right():
-		#dir.z = horizontal_speed
-	#	move(dir)
+	rotate_y(PI/2)
 	pass
 
 func turn_left():
-		#dir.z = horizontal_speed
-	#	move(dir)
+	rotate_y(-PI/2)
 	pass
 	
-func jump():
-		#dir.z = horizontal_speed
-	#	move(dir)
+func half_turn():
+	rotate_y(PI)
+	pass
+	
+func jump(delta):
+	dir.y = jump_speed
 	pass
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
-#	dir.y += delta*gravity
-	
-	if Input.is_action_just_pressed("ui_up"):
-		move_front()
+	current_position = get_transform().origin
+	print(current_position)
+
+	if Input.is_action_pressed("w"):
+		move_front(current_position)
 		
-	if Input.is_action_just_pressed("ui_down"):
-		move_back()
+	if Input.is_action_pressed("s"):
+		move_back(current_position)
 		
-	if Input.is_action_just_pressed("ui_right"):
+	if Input.is_action_just_pressed("a"):
 		turn_right()
 		
-	if Input.is_action_just_pressed("ui_left"):
+	if Input.is_action_just_pressed("d"):
 		turn_left()
 		
 	if Input.is_action_just_pressed("ui_jump"):
-		jump()
+		jump(delta)
+	
+	dir.y += delta*gravity
+	move(dir)

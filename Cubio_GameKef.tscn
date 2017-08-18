@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/player.gd" type="Script" id=1]
 
@@ -35,6 +35,60 @@ radius = 1.0
 mid_height = 1.0
 radial_segments = 64
 rings = 8
+
+[sub_resource type="SpatialMaterial" id=7]
+
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_on_top = false
+flags_use_point_size = false
+flags_fixed_size = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 0
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 0.957031, 0.452347, 0.452347, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+_sections_unfolded = [ "Albedo" ]
+
+[sub_resource type="SphereMesh" id=8]
+
+radius = 0.4
+height = 1.1
+radial_segments = 64
+rings = 32
+is_hemisphere = false
 
 [node name="Cubio_GameKef" type="Node"]
 
@@ -391,7 +445,7 @@ material/0 = null
 [node name="KinematicBody" type="KinematicBody" parent="."]
 
 editor/display_folded = true
-transform = Transform( 1.5, 0, 0, 0, -6.55671e-08, -2, 0, 1.5, -8.74228e-08, -3.31081, 3.42604, 0 )
+transform = Transform( 1.5, 0, 0, 0, -6.55671e-08, -2, 0, 1.5, -8.74228e-08, 8.63928, 10.0329, 6.22688 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -399,12 +453,12 @@ collision_mask = 1
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
-speed = 0.2
 gravity = -2
 jump_speed = 0.5
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, -3.55271e-15, 1, 0, 0, 0 )
 shape = SubResource( 5 )
 disabled = false
 
@@ -422,11 +476,29 @@ lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
 mesh = SubResource( 6 )
 skeleton = NodePath("..")
+material/0 = SubResource( 7 )
+_sections_unfolded = [ "material" ]
+
+[node name="MeshInstance2" type="MeshInstance" parent="KinematicBody"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, -2.4869e-14, 1, -0.967893, -5.56466e-08, -0.954784 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+visible_in_all_rooms = false
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 8 )
+skeleton = NodePath("..")
 material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
 
-transform = Transform( -0.00575293, 0.403763, -0.914846, 0.00253898, 0.914863, 0.403755, 0.99998, 0, -0.00628829, -53.3999, 30.5953, 3.18795 )
+transform = Transform( 0.499029, -0.563457, 0.658396, -0.068139, 0.731894, 0.678003, -0.863902, -0.383206, 0.326843, 36.939, 26.1317, 10.0953 )
 projection = 0
 fov = 65.0
 near = 0.1
