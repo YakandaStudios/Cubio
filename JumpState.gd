@@ -1,10 +1,13 @@
 extends "StateBase.gd"
 
-func _init():
+func enter():
+	print("Enter function Jump")
 	pass
 	
-func _process(delta):
+func update():
+	print("Update function Jump")
 	pass
 	
 func exit():
+	print("Exit function Jump")
 	pass

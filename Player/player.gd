@@ -19,9 +19,9 @@
 #SOFTWARE.
 extends KinematicBody
 
-var speed = 0.3
-export(float) var gravity = -2
-export(float) var jump_speed = 0.5
+var speed = 0.1
+var gravity = -2
+var jump_speed = 0.5
 var current_position = Vector3()
 var dir = Vector3()
 var rot = 0
@@ -35,12 +35,12 @@ func die():
 	queue_free()
 	get_tree().set_pause(true)
 
-func move_front(current_position):
-	current_position.z = speed
+func move_front(current_position, delta):
+	current_position.z = current_position.z + ((speed * delta)/50)
 	move(current_position)
 
-func move_back(current_position):
-	current_position.z = -speed
+func move_back(current_position, delta):
+	current_position.z = current_position.z -  ((speed * delta)/50)
 	move(current_position)
 
 func turn_right():
@@ -63,12 +63,14 @@ func jump(delta):
 func _process(delta):	
 	current_position = get_transform().origin
 	print(current_position)
+	dir.y += delta*gravity
+	move(dir)
 
 	if Input.is_action_pressed("w"):
-		move_front(current_position)
+		move_front(current_position, delta)
 		
 	if Input.is_action_pressed("s"):
-		move_back(current_position)
+		move_back(current_position, delta)
 		
 	if Input.is_action_just_pressed("a"):
 		turn_right()
@@ -79,5 +81,4 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_jump"):
 		jump(delta)
 	
-	dir.y += delta*gravity
-	move(dir)
+	

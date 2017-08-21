@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/player.gd" type="Script" id=1]
 
@@ -90,16 +90,49 @@ radial_segments = 64
 rings = 32
 is_hemisphere = false
 
+[sub_resource type="GDScript" id=9]
+
+script/source = "extends Node
+#const idle_state_path = preload(\"res://States/IdleState.gd\")
+#const jump_state_path = preload(\"res://States/JumpState.gd\")
+#const moving_state_path = preload(\"res://States/MovingState.gd\")
+#const turning_state_path = preload(\"res://States/TurningState.gd\")
+#const double_jump_state_path = preload(\"res://States/DoubleJumpState.gd\")
+
+#Manejar los estados dentro del diagrama de Maquina de Estados
+#Asegurar de ejecutar los tres estados de cada maquina de estados
+
+export(NodePath) var character_path = null
+var current_state_instance = null
+
+func _ready():
+	character_path = get_node(character_path)
+	current_state_instance = idle_state_path.instance()
+	pass
+
+func state_cycle(state):
+	state.enter()
+
+
+
+func _process(delta):
+		state.update()
+
+#conectar con funcion con la señal que recibe objeto
+#llamar exit y volver a iniciar la funcion
+		
+
+		
+"
+
 [node name="Cubio_GameKef" type="Node"]
 
 [node name="Scenario" type="Spatial" parent="."]
 
-editor/display_folded = true
-
 [node name="Floor" type="StaticBody" parent="Scenario"]
 
 editor/display_folded = true
-transform = Transform( 25, 0, 0, 0, 0.2, 0, 0, 0, 25, 0, 0, 0 )
+transform = Transform( 35.5417, 0, 0, 0, 0.142167, 0, 0, 0, 35.5417, 0, 0, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -117,6 +150,7 @@ disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="Scenario/Floor"]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136644, 0.0797969, -0.00786228 )
 layers = 1
 material_override = null
 cast_shadow = 1
@@ -444,7 +478,6 @@ material/0 = null
 
 [node name="KinematicBody" type="KinematicBody" parent="."]
 
-editor/display_folded = true
 transform = Transform( 1.5, 0, 0, 0, -6.55671e-08, -2, 0, 1.5, -8.74228e-08, 8.63928, 10.0329, 6.22688 )
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -453,8 +486,6 @@ collision_mask = 1
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
-gravity = -2
-jump_speed = 0.5
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 
@@ -496,13 +527,18 @@ mesh = SubResource( 8 )
 skeleton = NodePath("..")
 material/0 = null
 
+[node name="StateMachine" type="Node" parent="KinematicBody"]
+
+script = SubResource( 9 )
+character_path = NodePath("..")
+
 [node name="Camera" type="Camera" parent="."]
 
-transform = Transform( 0.499029, -0.563457, 0.658396, -0.068139, 0.731894, 0.678003, -0.863902, -0.383206, 0.326843, 36.939, 26.1317, 10.0953 )
+transform = Transform( 0.169386, -1.46957, 0.877035, 0, 0.88132, 1.47675, -1.71138, -0.145453, 0.0868058, 35.556, 58.6977, 8.23018 )
 projection = 0
 fov = 65.0
 near = 0.1
-far = 100.0
+far = 300.0
 keep_aspect = 1
 current = false
 cull_mask = 1048575
@@ -526,6 +562,7 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_bias = 1.0
 shadow_contact = 0.0
 shadow_max_distance = 200.0
+shadow_reverse_cull_face = false
 editor_only = false
 directional_shadow_mode = 2
 directional_shadow_split_1 = 0.1

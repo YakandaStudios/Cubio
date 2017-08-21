@@ -1,27 +1,18 @@
 extends Node
+const moving = preload("res://Player/States/Ducking.gd")
+const Falling = preload("res://Player/States/Falling.gd")
+const Jumping = preload("res://Player/States/Jumping.gd")
+const Walking = preload("res://Player/States/Walking.gd")
+#Manejar los estados dentro del diagrama de Maquina de Estados
+#Asegurar de ejecutar los tres estados de cada maquina de estados
 
-enum state_{
-	STATE_STANDING,
-	STATE_JUMPING,
-	STATE_DOUBLEJUMP,
-	STATE_TURNING,
-	STATE_MOVING,
-}
+export(NodePath) var character_path = null
+var current_state
 
-#handleStates
-export(NodePath) var character_target = null
+func _ready():
+	character_path = get_node(character_path)
+	current_state
+	pass
 
 func _process(delta):
-	if(state_)
-
-pass
-
-func handleInput(Input input)
-{
-  HeroineState* state = state_->handleInput(*this, input);
-  if (state != NULL)
-  {
-    delete state_;
-    state_ = state;
-  }
-}
+	print(character_path)
