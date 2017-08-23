@@ -24,27 +24,28 @@ var gravity = -2
 var jump_speed = 0.5
 var current_position = Vector3()
 var dir = Vector3()
-var rot = 0
+var current_rotation = Vector3()
 
 func _ready():
-	current_position = get_transform().origin
+	current_position = get_node(".").get_translation()
 	set_process(true)
 	
 #Set free the character object and pause the game
 func die():
 	queue_free()
 	get_tree().set_pause(true)
-
+	
 func move_front(current_position, delta):
-	current_position.z = current_position.z + ((speed * delta)/50)
-	move(current_position)
+	current_position.z += 10 * delta
+	get_node(".").set_translation(current_position)
 
 func move_back(current_position, delta):
-	current_position.z = current_position.z -  ((speed * delta)/50)
-	move(current_position)
+	current_position.z -= 10 * delta
+	get_node(".").set_translation(current_position)
 
 func turn_right():
-	rotate_y(PI/2)
+#	rotate_y(PI/2)
+	set_rotation(Vector3(-PI/2,0,0))
 	pass
 
 func turn_left():
@@ -61,11 +62,16 @@ func jump(delta):
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
-	current_position = get_transform().origin
-	print(current_position)
+#	current_position = get_transform().origin
+	current_position = get_translation()
+	current_rotation = get_rotation()
+	
+	print(current_rotation)
+	
 	dir.y += delta*gravity
 	move(dir)
-
+#	print(current_position)
+	
 	if Input.is_action_pressed("w"):
 		move_front(current_position, delta)
 		
@@ -77,8 +83,6 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("d"):
 		turn_left()
-		
-	if Input.is_action_just_pressed("ui_jump"):
-		jump(delta)
-	
-	
+#		
+#	if Input.is_action_just_pressed("ui_jump"):
+#		jump(delta)

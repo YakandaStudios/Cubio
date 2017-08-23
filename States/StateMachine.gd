@@ -1,6 +1,6 @@
 extends Node
 
-var idle_state_class = preload("res://States/IdleState.gd")
+var idle_state_class = preload("res://IdleState.gd")
 var character_path = preload("res://Player/Character.tscn")
 #Manejar los estados dentro del diagrama de Maquina de Estados
 #Asegurar de ejecutar los tres estados de cada maquina de estados

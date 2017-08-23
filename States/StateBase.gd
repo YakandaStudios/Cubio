@@ -1,9 +1,13 @@
 extends Node
 
-func enter(player):
+signal changing_state(state)
+
+# Handle enter events.
+func enter(character_node):
 	pass
-	
-func _process(delta):
+
+# Handle _process of events.
+func update(delta):
 	pass
 	
 # Handle exit events.
