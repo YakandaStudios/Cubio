@@ -1,11 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/player.gd" type="Script" id=1]
-
-[sub_resource type="CapsuleShape" id=1]
-
-radius = 1.0
-height = 1.0
 
 [sub_resource type="CapsuleMesh" id=2]
 
@@ -68,24 +63,27 @@ radial_segments = 64
 rings = 32
 is_hemisphere = false
 
+[sub_resource type="CapsuleShape" id=5]
+
+radius = 1.0
+height = 1.0
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 1.0
+height = 1.0
+_sections_unfolded = [ "Resource" ]
+
 [node name="Character" type="KinematicBody"]
 
-editor/display_folded = true
-transform = Transform( 1.5, 0, 0, 0, -6.55671e-08, -2, 0, 1.5, -8.74228e-08, 8.63928, 10.0329, 6.22688 )
+transform = Transform( 1.5, 0, 0, 0, -6.55671e-08, -2, 0, 1.5, -8.74228e-08, 0, 6.18923, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform", "Visibility" ]
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, -7.10543e-15, 1, 0, 0, 0 )
-shape = SubResource( 1 )
-disabled = false
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform", "Visibility", "collision" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 
@@ -120,5 +118,46 @@ lod_max_hysteresis = 0.0
 mesh = SubResource( 4 )
 skeleton = NodePath("..")
 material/0 = null
+
+[node name="Area" type="Area" parent="."]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, -3.55271e-14, 1, 0, 1.77048e-08, 0.303778 )
+input_ray_pickable = false
+input_capture_on_drag = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision_layer = 1
+collision_mask = 1
+audio_bus_override = false
+audio_bus_name = "Master"
+reverb_bus_enable = false
+reverb_bus_name = "Master"
+reverb_bus_amount = 0.0
+reverb_bus_uniformity = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, -3.55271e-15, 1, 0, 0, 0 )
+shape = SubResource( 5 )
+disabled = false
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, -1.77636e-14, 1, 0, 0, 0 )
+shape = SubResource( 1 )
+disabled = false
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+
+[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
 
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://StateMachine.gd" type="Script" id=1]
+[ext_resource path="res://camera.gd" type="Script" id=1]
+[ext_resource path="res://StateMachine.gd" type="Script" id=2]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -28,11 +29,10 @@ subdivide_depth = 0
 
 [node name="Scenario" type="Spatial" parent="."]
 
-editor/display_folded = true
+[node name="Floor" type="StaticBody" parent="Scenario" groups=[
+"floor",
+]]
 
-[node name="Floor" type="StaticBody" parent="Scenario"]
-
-editor/display_folded = true
 transform = Transform( 35.5417, 0, 0, 0, 0.142167, 0, 0, 0, 35.5417, 0, 0, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -44,7 +44,9 @@ constant_linear_velocity = Vector3( 0, 0, 0 )
 constant_angular_velocity = Vector3( 0, 0, 0 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="CollisionShape" type="CollisionShape" parent="Scenario/Floor"]
+[node name="CollisionShape" type="CollisionShape" parent="Scenario/Floor" groups=[
+"floor",
+]]
 
 shape = SubResource( 1 )
 disabled = false
@@ -67,6 +69,8 @@ skeleton = NodePath("..")
 material/0 = null
 
 [node name="SetObstacules" type="Spatial" parent="Scenario"]
+
+editor/display_folded = true
 
 [node name="Obstacule" type="StaticBody" parent="Scenario/SetObstacules"]
 
@@ -275,7 +279,7 @@ material/0 = null
 [node name="Obstacule7" type="StaticBody" parent="Scenario/SetObstacules"]
 
 editor/display_folded = true
-transform = Transform( 1.99828, 0, 0, 0, 1.99828, 0, 0, 0, 1.99828, -3.83037, 9.8464, 3.91567 )
+transform = Transform( 1.99828, 0, 0, 0, 1.99828, 0, 0, 0, 1.99828, -7.0948, 9.8464, 2.32334 )
 input_ray_pickable = true
 input_capture_on_drag = false
 collision_layer = 1
@@ -376,7 +380,7 @@ material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
 
-transform = Transform( 0.169386, -1.46957, 0.877035, 0, 0.88132, 1.47675, -1.71138, -0.145453, 0.0868058, 35.556, 58.6977, 8.23018 )
+transform = Transform( 1.68482, -0.0575167, 0.339979, -0.0697255, 1.60379, 0.616862, -0.337687, -0.61812, 1.56889, 10.7264, 11.6157, 39.7759 )
 projection = 0
 fov = 65.0
 near = 0.1
@@ -388,6 +392,7 @@ environment = null
 h_offset = 0.0
 v_offset = 0.0
 doppler/tracking = 0
+script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -415,6 +420,6 @@ directional_shadow_normal_bias = 0.2
 
 [node name="StateMachine" type="Node" parent="."]
 
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 

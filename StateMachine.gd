@@ -9,18 +9,21 @@ var character_node = null
 
 func _ready():
 	current_state_instance = idle_state_class.new()
-	idle_state_class.connect("changing_state", self, "on_changing_state")
+	current_state_instance.connect("changing_state", self, "on_changing_state")
 	character_node = character_path.instance()
 	add_child(character_node)
-
 	current_state_instance.enter(character_node)
+	print("Saliendo de Ready FSM")
 
 func _process(delta):
 	current_state_instance.update(delta)
 
 func on_changing_state(state):
-	current_state_instance.exit()
-	current_state_instance.free_queued()
-	current_state_instance = state
-	current_state_instance.enter(character_node)
-	
+	print("entrando a changing state")
+	if ( state != null):
+		current_state_instance.exit()
+		current_state_instance.queue_free()	
+		current_state_instance = state
+		current_state_instance.connect("changing_state", self, "on_changing_state")
+		current_state_instance.enter(character_node)
+#	

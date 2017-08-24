@@ -23,11 +23,14 @@ var speed = 0.1
 var gravity = -2
 var jump_speed = 0.5
 var current_position = Vector3()
-var dir = Vector3()
+var dir = Vector3(0,0,0)
 var current_rotation = Vector3()
+
+var touch_floor = false
 
 func _ready():
 	current_position = get_node(".").get_translation()
+	move_and_slide(Vector3(0,0,0), Vector3(0,1,0))
 	set_process(true)
 	
 #Set free the character object and pause the game
@@ -37,11 +40,11 @@ func die():
 	
 func move_front(current_position, delta):
 	current_position.z += 10 * delta
-	get_node(".").set_translation(current_position)
+	move_and_slide(current_position)
 
 func move_back(current_position, delta):
 	current_position.z -= 10 * delta
-	get_node(".").set_translation(current_position)
+	move_and_slide(current_position)
 
 func turn_right():
 #	rotate_y(PI/2)
@@ -66,23 +69,37 @@ func _process(delta):
 	current_position = get_translation()
 	current_rotation = get_rotation()
 	
-	print(current_rotation)
-	
 	dir.y += delta*gravity
 	move(dir)
 #	print(current_position)
-	
+#	print(current_rotation)
+#	print(is_on_floor())
+
+#set_floor_properties(normal,slope)
+#move(speed*delta)
+#if(is_on_floor()):
+#	
 	if Input.is_action_pressed("w"):
 		move_front(current_position, delta)
-		
-	if Input.is_action_pressed("s"):
-		move_back(current_position, delta)
-		
-	if Input.is_action_just_pressed("a"):
-		turn_right()
-		
-	if Input.is_action_just_pressed("d"):
-		turn_left()
 #		
+#	if Input.is_action_pressed("s"):
+#		move_back(current_position, delta)
+#		
+#	if Input.is_action_just_pressed("a"):
+#		turn_right()
+#		
+#	if Input.is_action_just_pressed("d"):
+#		turn_left()
+		
 #	if Input.is_action_just_pressed("ui_jump"):
 #		jump(delta)
+
+func _on_Area_body_entered( body ):
+	if(body.is_in_group("floor")):
+		touch_floor = true
+	
+
+
+func _on_Area_body_exited( body ):
+	if(body.is_in_group("floor")):
+		touch_floor = false
