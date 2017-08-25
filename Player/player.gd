@@ -19,6 +19,12 @@
 #SOFTWARE.
 extends KinematicBody
 
+var jump_state_path = preload("res://States/JumpState.gd")
+var turning_state_path = preload("res://States/TurningState.gd")
+var moving_state_path = preload("res://States/MovingState.gd")
+var idle_state_path = preload("res://States/IdleState.gd")
+var double_jump_state_path = preload("res://States/DoubleJumpState.gd")
+
 var speed = 0.1
 var gravity = -2
 var jump_speed = 0.5
@@ -37,29 +43,31 @@ func _ready():
 func die():
 	queue_free()
 	get_tree().set_pause(true)
-	
-func move_front(current_position, delta):
+
+#Press A	
+func move_front(delta):
 	current_position.z += 10 * delta
 	move_and_slide(current_position)
-
-func move_back(current_position, delta):
+#Press S	
+func move_back(delta):
 	current_position.z -= 10 * delta
 	move_and_slide(current_position)
-
+	
+#Press D
 func turn_right():
-#	rotate_y(PI/2)
-	set_rotation(Vector3(-PI/2,0,0))
-	pass
-
-func turn_left():
 	rotate_y(-PI/2)
+#	set_rotation(Vector3(-PI/2,0,0))
+	pass
+#Press A
+func turn_left():
+	rotate_y(PI/2)
 	pass
 	
 func half_turn():
-	rotate_y(PI)
+	rotate_y(PI/2)
 	pass
 	
-func jump(delta):
+func jump():
 	dir.y = jump_speed
 	pass
 	
@@ -75,13 +83,13 @@ func _process(delta):
 #	print(current_rotation)
 #	print(is_on_floor())
 
-#set_floor_properties(normal,slope)
-#move(speed*delta)
-#if(is_on_floor()):
+	#set_floor_properties(normal,slope)
+	#move(speed*delta)
+	#if(is_on_floor()):
 #	
-	if Input.is_action_pressed("w"):
-		move_front(current_position, delta)
-#		
+#	if Input.is_action_pressed("w"):
+#		move_front(current_position, delta)
+		
 #	if Input.is_action_pressed("s"):
 #		move_back(current_position, delta)
 #		
@@ -97,8 +105,6 @@ func _process(delta):
 func _on_Area_body_entered( body ):
 	if(body.is_in_group("floor")):
 		touch_floor = true
-	
-
 
 func _on_Area_body_exited( body ):
 	if(body.is_in_group("floor")):

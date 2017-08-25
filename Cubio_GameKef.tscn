@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://camera.gd" type="Script" id=1]
-[ext_resource path="res://StateMachine.gd" type="Script" id=2]
+[ext_resource path="res://StateMachine.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -392,7 +391,6 @@ environment = null
 h_offset = 0.0
 v_offset = 0.0
 doppler/tracking = 0
-script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -420,6 +418,6 @@ directional_shadow_normal_bias = 0.2
 
 [node name="StateMachine" type="Node" parent="."]
 
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 
 
