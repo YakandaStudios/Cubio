@@ -35,7 +35,7 @@ var current_rotation = Vector3()
 var touch_floor = false
 
 func _ready():
-	current_position = get_node(".").get_translation()
+	current_position = get_node(".").get_transform().origin
 	set_process(true)
 	
 #Set free the character object and pause the game
@@ -44,29 +44,40 @@ func die():
 	get_tree().set_pause(true)
 
 #Press A	
-func move_front(dir, delta):
+func move_forwards( delta):
 	print("Move")
-	move_and_slide(dir)
+	current_position.z += delta* 20
+	move_and_slide(current_position)
 
 #Press D
 func turn_right():
-	global_rotate( Vector3(0,1,0), -1.5708 )
+#	rotate_y(90)
 	
+#	var aux = get_global_transform()
+#	rotated(Vector3(0,1,0), (deg2rad(90)))
+#	set_global_transform(aux)
+	
+	global_rotate( Vector3(0,1,0), -1.5708 )
+#	
 #Press A
 func turn_left():
 	global_rotate( Vector3(0,1,0), 1.5708 )
 	
 func half_turn():
 	global_rotate( Vector3(0,1,0), 3.1416 )
-
 	
+
+
+#	var aux = get_global_transform()
+#	aux.origin.rotated(Vector3(0,1,0), (deg2rad(180)))
+#	set_global_transform(aux)
 func jump():
 	dir.y = jump_speed
 	pass
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
-	
+	current_position = get_node(".").get_transform().origin
 	print(dir)
 	dir.y += delta*gravity
 	move(dir)

@@ -13,10 +13,8 @@ func enter(character_node):
 func update(delta):
 #If still tuirning itself, change to move
 	if Input.is_action_pressed("a"):
-		character_node.move_front(delta)
 		emit_signal("changing_state", character_node.moving_state_path.new() ) 
 	if Input.is_action_pressed("d"):
-		character_node.move_front(delta)
 		emit_signal("changing_state", character_node.moving_state_path.new() ) 
 		
 		
