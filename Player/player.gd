@@ -1,4 +1,4 @@
-#Copyright (c) 2017 Yakanda Studios | Mantra: Going to next level
+	#Copyright (c) 2017 Yakanda Studios | Mantra: Going to next level
 
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ var double_jump_state_path = preload("res://States/DoubleJumpState.gd")
 
 var speed = 0.1
 var gravity = -2
-var jump_speed = 0.5
+var jump_speed = 5
 var current_position = Vector3()
 var dir = Vector3(0,0,0)
 var current_rotation = Vector3()
@@ -36,7 +36,7 @@ var touch_floor = false
 
 func _ready():
 	current_position = get_node(".").get_translation()
-	move_and_slide(Vector3(0,0,0), Vector3(0,1,0))
+	move_and_slide(dir, Vector3(0,1,0))
 	set_process(true)
 	
 #Set free the character object and pause the game
@@ -46,21 +46,23 @@ func die():
 
 #Press A	
 func move_front(delta):
-	current_position.z += 10 * delta
-	move_and_slide(current_position)
-#Press S	
+	print("MoveFront")
+	dir = dir * (delta * speed)
+	move_and_slide(dir)
+	#Press S	
 func move_back(delta):
-	current_position.z -= 10 * delta
-	move_and_slide(current_position)
+	dir = dir * (-(delta * speed)) 
+	move_and_slide(dir)
 	
 #Press D
 func turn_right():
-	rotate_y(-PI/2)
-#	set_rotation(Vector3(-PI/2,0,0))
-	pass
+	dir.z = -1
+	
 #Press A
 func turn_left():
 	rotate_y(PI/2)
+	dir.x = -10
+	move_and_slide(dir)
 	pass
 	
 func half_turn():
@@ -77,6 +79,7 @@ func _process(delta):
 	current_position = get_translation()
 	current_rotation = get_rotation()
 	
+	print(dir)
 	dir.y += delta*gravity
 	move(dir)
 #	print(current_position)
@@ -87,20 +90,7 @@ func _process(delta):
 	#move(speed*delta)
 	#if(is_on_floor()):
 #	
-#	if Input.is_action_pressed("w"):
-#		move_front(current_position, delta)
-		
-#	if Input.is_action_pressed("s"):
-#		move_back(current_position, delta)
-#		
-#	if Input.is_action_just_pressed("a"):
-#		turn_right()
-#		
-#	if Input.is_action_just_pressed("d"):
-#		turn_left()
-		
-#	if Input.is_action_just_pressed("ui_jump"):
-#		jump(delta)
+#
 
 func _on_Area_body_entered( body ):
 	if(body.is_in_group("floor")):

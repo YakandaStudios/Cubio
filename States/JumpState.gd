@@ -3,7 +3,7 @@ extends "res://States/StateBase.gd"
 var character_node = null
 
 func enter(character_node):
-	print("Enter function JUMP")
+#	print("Enter function JUMP")
 	self.character_node = character_node
 	
 func update(delta):
@@ -18,4 +18,5 @@ func update(delta):
 		emit_signal("changing_state",  character_node.double_jump_state_path.new() ) 
 
 func exit():
-	print("Exit function JUMP")
+	pass
+#	print("Exit function JUMP")

@@ -4,7 +4,7 @@ extends "res://States/StateBase.gd"
 var character_node = null
 
 func enter(character_node):
-	print("Enter function Idle")
+#	print("Enter function Idle")
 	self.character_node = 	character_node
 #	character_node.move_and_slside(Vector3(0,0,0), Vector3(0,1,0))
 	
@@ -32,4 +32,5 @@ func update(delta):
 		emit_signal("changing_state", character_node.moving_state_path.new() ) 
 #	
 func exit():
-	print("Exit function Idle")
+	pass
+#	print("Exit function Idle")

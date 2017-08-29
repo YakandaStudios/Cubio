@@ -19,7 +19,7 @@ func _process(delta):
 	current_state_instance.update(delta)
 
 func on_changing_state(state):
-	print("entrando a changing state")
+#	print("entrando a changing state")
 	if ( state != null):
 		current_state_instance.exit()
 		current_state_instance.queue_free()	
