@@ -44,31 +44,21 @@ func die():
 	get_tree().set_pause(true)
 
 #Press A	
-func move_front(delta):
-	print("MoveFront")
-	dir.z = 10
+func move_front(dir, delta):
+	print("Move")
 	move_and_slide(dir)
-	#Press S	
-func move_back(delta):
-	dir.z = -10
-	move_and_slide(dir)
-	
+
 #Press D
 func turn_right():
-	self.set_globl
 	global_rotate( Vector3(0,1,0), -1.5708 )
-	update_gizmo()
 	
 #Press A
 func turn_left():
 	global_rotate( Vector3(0,1,0), 1.5708 )
-	update_gizmo()
-	
 	
 func half_turn():
 	global_rotate( Vector3(0,1,0), 3.1416 )
-	update_gizmo()
-	pass
+
 	
 func jump():
 	dir.y = jump_speed

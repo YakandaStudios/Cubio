@@ -24,7 +24,6 @@ func update(delta):
 		
 #Jump State
 	if Input.is_action_pressed("ui_jump"):
-		character_node.jump()
 		emit_signal("changing_state",  character_node.jump_state_path.new() ) 
 
 #Idle state: When you release the moving buttons

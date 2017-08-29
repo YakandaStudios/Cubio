@@ -5,6 +5,7 @@ var character_node = null
 func enter(character_node):
 #	print("Enter function DoubleJump")
 	self.character_node = character_node
+	character_node.jump()
 	
 func update(delta):
 #Touch floor
