@@ -47,6 +47,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 "floor",
 ]]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 1 )
 disabled = false
 
@@ -379,7 +380,7 @@ material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
 
-transform = Transform( 1.68482, -0.0575167, 0.339979, -0.0697255, 1.60379, 0.616862, -0.337687, -0.61812, 1.56889, 10.7264, 11.6157, 39.7759 )
+transform = Transform( 0.112057, 0, 1.71609, 0, 1.71975, 0, -1.71609, 0, 0.112057, 46.3156, 20.2583, 0 )
 projection = 0
 fov = 65.0
 near = 0.1

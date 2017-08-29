@@ -25,18 +25,17 @@ var moving_state_path = preload("res://States/MovingState.gd")
 var idle_state_path = preload("res://States/IdleState.gd")
 var double_jump_state_path = preload("res://States/DoubleJumpState.gd")
 
-var speed = 0.1
+var speed = 5
 var gravity = -2
-var jump_speed = 5
+var jump_speed = 0.5
 var current_position = Vector3()
-var dir = Vector3(0,0,0)
+var dir = Vector3()
 var current_rotation = Vector3()
 
 var touch_floor = false
 
 func _ready():
 	current_position = get_node(".").get_translation()
-	move_and_slide(dir, Vector3(0,1,0))
 	set_process(true)
 	
 #Set free the character object and pause the game
@@ -47,26 +46,28 @@ func die():
 #Press A	
 func move_front(delta):
 	print("MoveFront")
-	dir = dir * (delta * speed)
+	dir.z = 10
 	move_and_slide(dir)
 	#Press S	
 func move_back(delta):
-	dir = dir * (-(delta * speed)) 
+	dir.z = -10
 	move_and_slide(dir)
 	
 #Press D
 func turn_right():
-	dir.z = -1
+	self.set_globl
+	global_rotate( Vector3(0,1,0), -1.5708 )
+	update_gizmo()
 	
 #Press A
 func turn_left():
-	rotate_y(PI/2)
-	dir.x = -10
-	move_and_slide(dir)
-	pass
+	global_rotate( Vector3(0,1,0), 1.5708 )
+	update_gizmo()
+	
 	
 func half_turn():
-	rotate_y(PI/2)
+	global_rotate( Vector3(0,1,0), 3.1416 )
+	update_gizmo()
 	pass
 	
 func jump():
@@ -75,9 +76,6 @@ func jump():
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
-#	current_position = get_transform().origin
-	current_position = get_translation()
-	current_rotation = get_rotation()
 	
 	print(dir)
 	dir.y += delta*gravity

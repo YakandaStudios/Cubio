@@ -16,8 +16,10 @@ func update(delta):
 
 #Turning state
 	if Input.is_action_just_pressed("a"):
+		character_node.move_front(delta)
 		emit_signal("changing_state", character_node.turning_state_path.new() ) 
 	if Input.is_action_just_pressed("d"):
+		character_node.move_back(delta)
 		emit_signal("changing_state", character_node.turning_state_path.new() ) 
 		
 #Jump State
