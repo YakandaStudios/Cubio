@@ -3,7 +3,7 @@ extends "res://States/StateBase.gd"
 var character_node = null
 
 func enter(character_node):
-#	print("Enter function TURNING")
+	print("Enter function TURNING")
 	self.character_node = 	character_node
 	if Input.is_action_pressed("a"):
 		character_node.turn_left()
@@ -35,5 +35,5 @@ func update(delta):
 		emit_signal("changing_state", character_node.idle_state_path.new() ) 
 #	
 func exit():
-	pass
-#	print("Exit function TURNING")
+#	pass
+	print("Exit function TURNING")

@@ -27,7 +27,7 @@ var double_jump_state_path = preload("res://States/DoubleJumpState.gd")
 
 var speed = 5
 var gravity = -2
-var jump_speed = 0.5
+var jump_speed = 0.8
 var current_position = Vector3()
 var dir = Vector3()
 var current_rotation = Vector3()
@@ -77,8 +77,9 @@ func jump():
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
+#	print(touch_floor)
 	current_position = get_node(".").get_transform().origin
-	print(dir)
+#	print(dir)
 	dir.y += delta*gravity
 	move(dir)
 #	print(current_position)
