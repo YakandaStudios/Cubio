@@ -28,8 +28,6 @@ subdivide_depth = 0
 
 [node name="Scenario" type="Spatial" parent="."]
 
-editor/display_folded = true
-
 [node name="Floor" type="StaticBody" parent="Scenario" groups=[
 "floor",
 ]]
@@ -49,6 +47,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 "floor",
 ]]
 
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 1 )
 disabled = false
 
