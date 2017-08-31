@@ -28,8 +28,11 @@ var double_jump_state_path = preload("res://States/DoubleJumpState.gd")
 var speed = 5
 var gravity = -2
 var jump_speed = 0.8
-var current_position = Vector3()
 var dir = Vector3()
+
+var vectorDir = Vector3()
+var current_position = Vector3()
+
 var current_rotation = Vector3()
 
 var touch_floor = false
@@ -44,27 +47,50 @@ func die():
 	get_tree().set_pause(true)
 
 #Press A	
-func move_forwards( delta):
+func move_z( delta):
 	print("Move")
 	current_position.z += delta* 20
 	move_and_slide(current_position)
 
+func move_forwards(delta, vector):
+	dir = vector
+	if dir.z != 0:
+		dir.z += delta * speed
+	elif dir.x != 0:
+		dir.x += delta * speed
+	move(dir)
+	
+
+	
+func turn( deg):
+	
+	rotate_y(deg)
+#	if(scalarDot>0):
+#		rotate_y(deg)
+#		pass
+#	elif scalarDot<0:
+#		rotate_y(deg)
+#		pass
+#	elif scalarDot==0:
+#		pass
+
+	
 #Press D
-func turn_right():
+#func turn_right():
 #	rotate_y(90)
 	
 #	var aux = get_global_transform()
 #	rotated(Vector3(0,1,0), (deg2rad(90)))
 #	set_global_transform(aux)
 	
-	global_rotate( Vector3(0,1,0), -1.5708 )
-#	
-#Press A
-func turn_left():
-	global_rotate( Vector3(0,1,0), 1.5708 )
+#	global_rotate( Vector3(0,1,0), -1.5708 )
 	
-func half_turn():
-	global_rotate( Vector3(0,1,0), 3.1416 )
+#Press A
+#func turn_left():
+#	global_rotate( Vector3(0,1,0), 1.5708 )
+#	
+#func half_turn():
+#	global_rotate( Vector3(0,1,0), 3.1416 )
 	
 
 
@@ -77,6 +103,7 @@ func jump():
 	
 #It has the functionality about the gravitiy and movement of the character
 func _process(delta):	
+	printt(Vector3(0,0,1).dot(dir))
 #	print(touch_floor)
 	current_position = get_node(".").get_transform().origin
 #	print(dir)
